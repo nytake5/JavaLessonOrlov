@@ -1,6 +1,5 @@
 package ssu.daniil_orlov.java.lesson_1.task1;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
