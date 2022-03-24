@@ -1,37 +1,37 @@
 package ssu.daniil_orlov.java.lesson_2.task_1;
 
-import ssu.daniil_orlov.java.lesson_2.task_1.food.Food;
+import ssu.daniil_orlov.java.lesson_2.task_1.food.Ingredient;
 
 import java.util.ArrayList;
 
 public class Fridge {
-    public ArrayList<Food> foods;
+    public ArrayList<Ingredient> ingredients;
 
     public Fridge(){
-        foods = new ArrayList<>();
+        ingredients = new ArrayList<>();
     }
 
-    public void AddProduct(Food food){
-        for (int i = 0; i < foods.size() - 1; i++){
-            if (foods.get(i).getTitle().equals(food.getTitle())){
-                Food tempFood = foods.get(i);
-                tempFood.setCount(tempFood.getCount() + food.getCount());
-                foods.set(i, tempFood);
+    public void addProduct(Ingredient ingredient){
+        for (int i = 0; i < this.ingredients.size(); i++){
+            if (this.ingredients.get(i).getTitle().equals(ingredient.getTitle())){
+                Ingredient tempIngredient = this.ingredients.get(i);
+                tempIngredient.setCount(tempIngredient.getCount() + ingredient.getCount());
+                this.ingredients.set(i, tempIngredient);
                 return;
             }
         }
-        foods.add(food);
+        this.ingredients.add(ingredient);
     }
 
-    public Food getProduct(String foodName, int count) {
-        for (int i = 0; i < foods.size() - 1; i++){
-            if (foods.get(i).getTitle().equals(foodName)){
-                Food tempFood = foods.get(i);
-                tempFood.setCount(tempFood.getCount() - count);
-                foods.set(i, tempFood);
-                Food resFood = foods.get(i).clone();
-                resFood.setCount(count);
-                return resFood;
+    public Ingredient getProduct(String foodName, int count) {
+        for (int i = 0; i < ingredients.size(); i++){
+            if (ingredients.get(i).getTitle().equals(foodName)){
+                Ingredient tempIngredient = ingredients.get(i);
+                tempIngredient.setCount(tempIngredient.getCount() - count);
+                ingredients.set(i, tempIngredient);
+                Ingredient resIngredient = ingredients.get(i).clone();
+                resIngredient.setCount(count);
+                return resIngredient;
             }
         }
         return null;
@@ -40,8 +40,8 @@ public class Fridge {
     @Override
     public String toString(){
         StringBuilder res = new StringBuilder();
-        for (Food food : foods) {
-            res.append(food.toString() + "\n");
+        for (Ingredient ingredient : this.ingredients) {
+            res.append(ingredient.toString() + "\n");
         }
         return res.toString();
     }

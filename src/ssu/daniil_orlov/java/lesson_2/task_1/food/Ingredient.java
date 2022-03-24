@@ -1,10 +1,13 @@
 package ssu.daniil_orlov.java.lesson_2.task_1.food;
 
-public class Food {
+import java.io.Serializable;
+import java.util.Comparator;
 
-    public Food(){}
+public class Ingredient implements Serializable {
 
-    public Food(String title, TypeOfCooking type, Condition condition, int count, int calories){
+    public Ingredient(){}
+
+    public Ingredient(String title, TypeOfCooking type, Condition condition, int count, int calories){
         setTitle(title);
         typeOfCooking = type;
         this.condition = condition;
@@ -17,7 +20,8 @@ public class Food {
     public TypeOfCooking typeOfCooking;
 
     public Condition condition;
-    public int _count;
+
+    protected int _count;
 
     protected int _calories;
 
@@ -49,18 +53,25 @@ public class Food {
         }
     }
 
-    public Food clone(){
-        Food food = new Food();
-        food.setCalories(getCalories());
-        food.condition = condition;
-        food.setTitle(getTitle());
-        food.setCount(getCount());
-        food.typeOfCooking = typeOfCooking;
-        return food;
+    public Ingredient clone(){
+        Ingredient ingredient = new Ingredient();
+        ingredient.setCalories(getCalories());
+        ingredient.condition = condition;
+        ingredient.setTitle(getTitle());
+        ingredient.setCount(getCount());
+        ingredient.typeOfCooking = typeOfCooking;
+        return ingredient;
     }
 
     @Override
     public String toString(){
         return getTitle() + " " + typeOfCooking + " " + condition + " " + getCount() + " " + getCalories();
     }
+
+    public static final Comparator<Ingredient> COMPARE_BY_CALORIES = new Comparator<Ingredient>() {
+        @Override
+        public int compare(Ingredient lhs, Ingredient rhs) {
+            return lhs.getCalories() - rhs.getCalories();
+        }
+    };
 }
