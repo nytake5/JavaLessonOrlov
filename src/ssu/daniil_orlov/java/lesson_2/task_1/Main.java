@@ -1,5 +1,9 @@
 package ssu.daniil_orlov.java.lesson_2.task_1;
 
+import ssu.daniil_orlov.java.lesson_2.task_1.KitchenExcptions.ConditionException;
+import ssu.daniil_orlov.java.lesson_2.task_1.KitchenExcptions.IngredientNotEnoughException;
+import ssu.daniil_orlov.java.lesson_2.task_1.KitchenExcptions.IngredientNotFoundException;
+import ssu.daniil_orlov.java.lesson_2.task_1.KitchenExcptions.TypeOfCookingException;
 import ssu.daniil_orlov.java.lesson_2.task_1.food.*;
 
 import java.util.ArrayList;
@@ -12,7 +16,7 @@ class MyApplicationTwo {
         app.startApplication();
     }
 
-    private void startApplication() {
+    private void startApplication(){
         Fridge fridge = createFridgeWithProduct();
 
         ArrayList<Ingredient> ingredients = getProductForBorsch(fridge);
@@ -24,16 +28,28 @@ class MyApplicationTwo {
         dish.sort();
 
         System.out.println(dish.toString());*/
-        findIngredient(dish);
+        try {
+            findIngredient(dish);
+        }
+        catch (ConditionException | TypeOfCookingException exception){
+            System.out.println(exception.toString());
+            return;
+        }
     }
 
     private ArrayList<Ingredient> getProductForBorsch(Fridge fridge)  {
         ArrayList<Ingredient> res = new ArrayList<Ingredient>();
-        res.add( fridge.getProduct("Meat", 1));
-        res.add(fridge.getProduct("Carrot", 1));
-        res.add(fridge.getProduct("Potato", 3));
-        res.add(fridge.getProduct("Onion", 1));
-        res.add(fridge.getProduct("Beet", 1));
+        try{
+            res.add( fridge.getProduct("Meat", 1));
+            res.add(fridge.getProduct("Carrot", 1));
+            res.add(fridge.getProduct("Potato", 3));
+            res.add(fridge.getProduct("Onion", 1));
+            res.add(fridge.getProduct("Beat", 1));
+        }
+        catch (IngredientNotEnoughException | IngredientNotFoundException exception){
+            System.out.println(exception.toString());
+            return new ArrayList<Ingredient>();
+        }
         return res;
     }
 
@@ -52,7 +68,7 @@ class MyApplicationTwo {
         return fridge;
     }
 
-    public void findIngredient(Dish dish){
+    public void findIngredient(Dish dish) throws TypeOfCookingException, ConditionException {
         int calories;
         TypeOfCooking type;
         Condition condition;
@@ -75,7 +91,7 @@ class MyApplicationTwo {
                 type = TypeOfCooking.Nothing;
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + in.next());
+                throw new TypeOfCookingException("Unexpected value: " + in.next());
         }
         System.out.println("Input condition:");
         switch (in.next()){
@@ -86,7 +102,7 @@ class MyApplicationTwo {
                 condition = Condition.Ready;
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + in.next());
+                throw new ConditionException("Unexpected value: " + in.next());
         }
         for(Ingredient ingredient : dish.Ingredients){
             if (ingredient.condition.equals(condition) &&
