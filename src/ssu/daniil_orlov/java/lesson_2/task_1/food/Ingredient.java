@@ -21,9 +21,9 @@ public class Ingredient implements Serializable {
 
     public Condition condition;
 
-    protected int _count;
+    protected transient int _count;
 
-    protected int _calories;
+    protected transient int _calories;
 
     public String getTitle(){
         return _title;

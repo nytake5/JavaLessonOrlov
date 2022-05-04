@@ -6,6 +6,7 @@ import ssu.daniil_orlov.java.lesson_2.task_1.KitchenExcptions.IngredientNotFound
 import ssu.daniil_orlov.java.lesson_2.task_1.KitchenExcptions.TypeOfCookingException;
 import ssu.daniil_orlov.java.lesson_2.task_1.food.*;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -23,18 +24,41 @@ class MyApplicationTwo {
 
         Dish dish = new Dish("Borsh", ingredients);
 
-       /* System.out.println(dish.toString());
+        serializeDish(dish);
+
+        Dish desDish = deserializeDish();
+        System.out.println(dish.toString());
+        System.out.println(desDish.toString());
+        /* System.out.println(dish.toString());
 
         dish.sort();
 
-        System.out.println(dish.toString());*/
+        System.out.println(dish.toString());
         try {
             findIngredient(dish);
         }
         catch (ConditionException | TypeOfCookingException exception){
             System.out.println(exception.toString());
             return;
+        }*/
+    }
+
+    public void serializeDish(Dish dish){
+        try(ObjectOutputStream ios = new ObjectOutputStream(new FileOutputStream("data.bin"))){
+            ios.writeObject(dish);
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+    }
+
+    public Dish deserializeDish(){
+        try(ObjectInputStream ios = new ObjectInputStream(new FileInputStream("data.bin"))) {
+            return (Dish) ios.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private ArrayList<Ingredient> getProductForBorsch(Fridge fridge)  {
@@ -44,7 +68,6 @@ class MyApplicationTwo {
             res.add(fridge.getProduct("Carrot", 1));
             res.add(fridge.getProduct("Potato", 3));
             res.add(fridge.getProduct("Onion", 1));
-            res.add(fridge.getProduct("Beat", 1));
         }
         catch (IngredientNotEnoughException | IngredientNotFoundException exception){
             System.out.println(exception.toString());
@@ -59,7 +82,7 @@ class MyApplicationTwo {
         fridge.addProduct(new Vegetable("Potato", TypeOfCooking.Cook, Condition.Raw, 6, 100));
         fridge.addProduct(new Vegetable("Tomato", TypeOfCooking.Cook, Condition.Raw, 10, 300));
         fridge.addProduct(new Vegetable("Cabbage", TypeOfCooking.Cook, Condition.Raw, 2, 150));
-        fridge.addProduct(new Vegetable("Onion", TypeOfCooking.Cook, Condition.Raw, 1, 50));
+        fridge.addProduct(new Vegetable("Onion", TypeOfCooking.Cook, Condition.Raw, 2, 50));
         fridge.addProduct(new Vegetable("Beet", TypeOfCooking.Cook, Condition.Raw, 2,  70));
         fridge.addProduct(new Vegetable("Eggplant", TypeOfCooking.Cook, Condition.Raw, 2, 350));
         fridge.addProduct(new Vegetable("Zucchini", TypeOfCooking.Cook, Condition.Raw, 3, 150));

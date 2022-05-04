@@ -24,5 +24,8 @@ public class Main {
 
         System.out.println(arr.toString());
 
+        for(int dg : arr){
+            System.out.print(dg + " ");
+        }
     }
 }

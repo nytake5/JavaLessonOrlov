@@ -37,10 +37,7 @@ public class DynamicArray<T> implements Iterable<T>{
     }
 
     public void set(T value, Integer index){
-        if(index > count){
-            add(value);
-        }
-        if(index < 0){
+        if(index < 0 || index > count){
             throw new ArrayIndexOutOfBoundsException();
         }
         if(count == capacity - 1){

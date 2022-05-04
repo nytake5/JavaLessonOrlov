@@ -1,9 +1,10 @@
 package ssu.daniil_orlov.java.lesson_2.task_1.food;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Dish{
+public class Dish implements Serializable {
     public ArrayList<Ingredient> Ingredients;
 
     private String _title;
@@ -35,7 +36,7 @@ public class Dish{
 
     @Override
     public String toString() {
-        return "Dish{" +
+        return "Dish: {" +
                 "_ingredients=" + Ingredients +
                 ", _title='" + _title + '\'' +
                 '}';
